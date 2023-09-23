@@ -1,3 +1,6 @@
+
+using ManaSword.Utility;
+
 using UnityEngine;
 
 namespace ManaSword.Physics2D.GridWorld
