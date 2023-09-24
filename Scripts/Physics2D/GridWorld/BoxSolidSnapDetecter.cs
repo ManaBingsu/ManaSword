@@ -1,10 +1,13 @@
 
+using System.Collections.Generic;
+
 using ManaSword.Utility;
 
 using UnityEngine;
 
 namespace ManaSword.Physics2D.GridWorld
 {
+    [System.Serializable]
     public class BoxSolidSnapDetecter : SolidSnapDetecter
     {
         private BoxBody boxBody;
@@ -23,6 +26,9 @@ namespace ManaSword.Physics2D.GridWorld
         [SerializeField]
         private bool[] isSnapped = new bool[4] { false, false, false, false };
         public override bool[] IsSnapped => isSnapped;
+
+        private HashSet<Collider2D> ignoreColliders = new HashSet<Collider2D>();
+        public HashSet<Collider2D> IgnoreColliders => ignoreColliders;
 
         public BoxSolidSnapDetecter(BoxBody boxBody)
         {
@@ -51,6 +57,11 @@ namespace ManaSword.Physics2D.GridWorld
                         continue;
                     }
 
+                    if (ignoreColliders.Contains(collider))
+                    {
+                        continue;
+                    }
+
                     if (collider.isTrigger)
                     {
                         continue;
@@ -61,7 +72,7 @@ namespace ManaSword.Physics2D.GridWorld
                     {
                         if (Mathf.Approximately(dotProduct, -1f))
                         {
-                            if (i == 0)
+                            if (i < 2)
                             {
                                 if (Mathf.Approximately(Mathf.Abs(boxBody.transform.position.y - center.y), (size.y + boxSize.y * 0.5f)))
                                     continue;

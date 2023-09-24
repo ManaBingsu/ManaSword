@@ -11,6 +11,7 @@ namespace ManaSword.Physics2D.GridWorld
         protected BoxMovementHandler boxMovementHandler;
         public BoxMovementHandler BoxMovementHandler => boxMovementHandler;
 
+        [SerializeField]
         protected BoxSolidSnapDetecter boxSolidSnapDetecter;
         public BoxSolidSnapDetecter BoxSolidSnapDetecter => boxSolidSnapDetecter;
 

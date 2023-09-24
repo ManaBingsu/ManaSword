@@ -16,6 +16,7 @@ namespace ManaSword.Physics2D.GridWorld
         protected GridTransformHandler gridTransform;
         public GridTransformHandler GridTransform => gridTransform;
 
+        [SerializeField]
         protected Vector3 velocity;
         public Vector3 Velocity => velocity;
 
