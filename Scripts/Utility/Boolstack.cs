@@ -29,11 +29,13 @@ namespace ManaSword.Utility
             }
 
             var prevValue = Value;
-            senderGroup.Add(sender);
-
             if (senderGroups[!value].Contains(sender))
             {
                 Unregist(sender, !value, out isToggled);
+            }
+            else
+            {
+                senderGroup.Add(sender);
             }
 
             isToggled = prevValue != Value;

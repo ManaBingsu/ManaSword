@@ -37,6 +37,7 @@ namespace ManaSword.Proxy.Unity.Component.ModuleSystem
 
             if (isEditorDebugMode && (Application.isPlaying && Application.isEditor))
             {
+                Module.Initalize();
                 RegistModuleToCoreInEditor();
             }
         }
@@ -53,13 +54,15 @@ namespace ManaSword.Proxy.Unity.Component.ModuleSystem
                     }
                     else
                     {
-                        Module.SetInactive(this, inactive, runOnlyPassiveEventWhenInactive);
+                        if (inactive)
+                            Module.SetInactive(this, inactive, runOnlyPassiveEventWhenInactive);
                     }
                 }
                 else
                 {
                     Module.ReplaceModuleInCore(coreProxy.Core, runOnlyPassiveEventWhenRegist);
-                    Module.SetInactive(this, inactive, runOnlyPassiveEventWhenInactive);
+                    if (inactive)
+                        Module.SetInactive(this, inactive, runOnlyPassiveEventWhenInactive);
                 }
             }
             else

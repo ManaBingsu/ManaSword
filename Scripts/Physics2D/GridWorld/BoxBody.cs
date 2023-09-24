@@ -6,7 +6,18 @@ namespace ManaSword.Physics2D.GridWorld
     public class BoxBody : Body
     {
         protected BoxCollider2D boxCollider2D;
-        public BoxCollider2D BoxCollider2D => boxCollider2D;
+        public BoxCollider2D BoxCollider2D
+        {
+            get
+            {
+                if (boxCollider2D == null)
+                {
+                    boxCollider2D = GetComponent<BoxCollider2D>();
+                }
+
+                return boxCollider2D;
+            }
+        }
 
         protected BoxMovementHandler boxMovementHandler;
         public BoxMovementHandler BoxMovementHandler => boxMovementHandler;

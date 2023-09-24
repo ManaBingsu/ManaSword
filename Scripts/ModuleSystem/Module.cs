@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-
 using ManaSword.SaveLoadSystem;
 using ManaSword.Utility;
 
 namespace ManaSword.ModuleSystem
 {
     [System.Serializable]
-    public abstract class Module : ISaveLoadEntity
+    public abstract class Module : ISaveLoadEntity, IBoolstackSender
     {
         protected Core core;
         public Core Core => core;
@@ -153,6 +151,8 @@ namespace ManaSword.ModuleSystem
         }
         protected virtual void RunRemoveFromCoreModuleEssentialEvent() { }
         #endregion
+
+        public virtual void Initalize() { }
 
         public void Load()
         {

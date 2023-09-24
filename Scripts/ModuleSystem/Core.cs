@@ -13,7 +13,7 @@ namespace ManaSword.ModuleSystem
             if (moduleDict.ContainsKey(module.Name))
                 return false;
 
-            UnityEngine.Debug.Log($"{module.Name} is added");
+            UnityEngine.Debug.LogWarning($"{module.Name} is added");
             moduleDict.Add(module.Name, module);
             return true;
         }
@@ -33,6 +33,20 @@ namespace ManaSword.ModuleSystem
 
             moduleDict.Remove(module.Name);
             return true;
+        }
+
+        public bool TryGetModule(string moduleName, out Module module)
+        {
+            module = null;
+            if (moduleDict.ContainsKey(moduleName))
+            {
+                module = moduleDict[moduleName];
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
