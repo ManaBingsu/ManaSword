@@ -38,6 +38,11 @@ namespace ManaSword.Physics2D.GridWorld
                         continue;
                     }
 
+                    if (collider.isTrigger)
+                    {
+                        continue;
+                    }
+
                     float dotProduct = Vector2.Dot(velocityDirections[i], hit.normal);
                     if (collider.GetType() == typeof(BoxCollider2D))
                     {
