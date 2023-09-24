@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace ManaSword.Physics2D.GridWorld
@@ -11,6 +13,9 @@ namespace ManaSword.Physics2D.GridWorld
 
         private float[] velocityDistances = new float[] { 0f, 0f };
         private Vector2[] velocityDirections = new Vector2[] { Vector2.zero, Vector2.zero };
+
+        private HashSet<Collider2D> ignoreColliders = new HashSet<Collider2D>();
+        public HashSet<Collider2D> IgnoreColliders => ignoreColliders;
 
         public BoxMovementHandler(BoxBody boxBody)
         {
@@ -33,7 +38,13 @@ namespace ManaSword.Physics2D.GridWorld
                 foreach (RaycastHit2D hit in hits)
                 {
                     var collider = hit.collider;
+
                     if (collider.Equals(boxBody.BoxCollider2D))
+                    {
+                        continue;
+                    }
+
+                    if (ignoreColliders.Contains(collider))
                     {
                         continue;
                     }

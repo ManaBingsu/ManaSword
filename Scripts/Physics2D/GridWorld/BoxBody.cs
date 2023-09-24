@@ -9,6 +9,8 @@ namespace ManaSword.Physics2D.GridWorld
         public BoxCollider2D BoxCollider2D => boxCollider2D;
 
         protected BoxMovementHandler boxMovementHandler;
+        public BoxMovementHandler BoxMovementHandler => boxMovementHandler;
+
         protected BoxSolidSnapDetecter boxSolidSnapDetecter;
         public BoxSolidSnapDetecter BoxSolidSnapDetecter => boxSolidSnapDetecter;
 
