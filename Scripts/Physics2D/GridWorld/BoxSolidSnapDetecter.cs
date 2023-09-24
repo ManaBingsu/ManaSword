@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ManaSword.Physics2D.GridWorld
 {
-    public class BoxSolidSnapDetecter
+    public class BoxSolidSnapDetecter : SolidSnapDetecter
     {
         private BoxBody boxBody;
 
@@ -22,7 +22,7 @@ namespace ManaSword.Physics2D.GridWorld
         private Vector2[] directions = new Vector2[] { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
         [SerializeField]
         private bool[] isSnapped = new bool[4] { false, false, false, false };
-        public bool[] IsSnapped => isSnapped;
+        public override bool[] IsSnapped => isSnapped;
 
         public BoxSolidSnapDetecter(BoxBody boxBody)
         {
@@ -31,7 +31,7 @@ namespace ManaSword.Physics2D.GridWorld
             boxOffset = boxBody.BoxCollider2D.offset;
         }
 
-        public void DetectSnap()
+        public override void DetectSnap()
         {
             for (var i = 0; i < 4; i++)
             {

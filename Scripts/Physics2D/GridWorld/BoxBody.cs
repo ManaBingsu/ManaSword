@@ -10,6 +10,7 @@ namespace ManaSword.Physics2D.GridWorld
 
         protected BoxMovementHandler boxMovementHandler;
         protected BoxSolidSnapDetecter boxSolidSnapDetecter;
+        public BoxSolidSnapDetecter BoxSolidSnapDetecter => boxSolidSnapDetecter;
 
         protected override void InitializeAdditional()
         {
