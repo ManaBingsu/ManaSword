@@ -32,17 +32,17 @@ namespace ManaSword.Physics2D.GridWorld
                 var hits = GetRaycastHits(i);
                 foreach (RaycastHit2D hit in hits)
                 {
-                    var collier = hit.collider;
-                    if (collier.Equals(boxBody.BoxCollider2D))
+                    var collider = hit.collider;
+                    if (collider.Equals(boxBody.BoxCollider2D))
                     {
                         continue;
                     }
 
                     float dotProduct = Vector2.Dot(velocityDirections[i], hit.normal);
-                    if (collier.GetType() == typeof(BoxCollider2D))
+                    if (collider.GetType() == typeof(BoxCollider2D))
                     {
-                        var size = collier.bounds.extents;
-                        var center = collier.bounds.center;
+                        var size = collider.bounds.extents;
+                        var center = collider.bounds.center;
                         var bodyPosition = boxBody.transform.position;
 
                         if (i == 0)
