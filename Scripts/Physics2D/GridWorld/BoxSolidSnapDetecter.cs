@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 using ManaSword.Utility;
@@ -39,6 +40,7 @@ namespace ManaSword.Physics2D.GridWorld
 
         public override void DetectSnap()
         {
+            ignoreColliders.Clear();
             for (var i = 0; i < 4; i++)
             {
                 isSnapped[i] = false;
@@ -46,8 +48,9 @@ namespace ManaSword.Physics2D.GridWorld
                 var direction = directions[i];
 
                 var hits = GetRaycastHits(i);
-                foreach (RaycastHit2D hit in hits)
+                while (!hits.IsEmpty())
                 {
+                    var hit = hits.Dequeue();
                     var collider = hit.collider;
                     var size = collider.bounds.extents;
                     var center = collider.bounds.center;
@@ -55,6 +58,13 @@ namespace ManaSword.Physics2D.GridWorld
                     if (collider.Equals(boxBody.BoxCollider2D))
                     {
                         continue;
+                    }
+
+                    if (collider.TryGetComponent(out InteractedBoxCollider2D interactedBoxCollider2D))
+                    {
+                        interactedBoxCollider2D.RunBoxBodyInteractEvent(boxBody);
+                        if (interactedBoxCollider2D.CanPass)
+                            continue;
                     }
 
                     if (ignoreColliders.Contains(collider))
@@ -90,10 +100,28 @@ namespace ManaSword.Physics2D.GridWorld
             }
         }
 
-        public RaycastHit2D[] GetRaycastHits(int index)
+        public PriorityQueue<RaycastHit2D> GetRaycastHits(int index)
         {
             Vector2 rayPoint = points[index];
-            return UnityEngine.Physics2D.BoxCastAll(new Vector3(boxBody.transform.position.x + boxOffset.x + rayPoint.x, boxBody.transform.position.y + boxOffset.y + rayPoint.y), boxSize, 0, Vector2.zero, 0);
+            var hits = UnityEngine.Physics2D.BoxCastAll(new Vector3(boxBody.transform.position.x + boxOffset.x + rayPoint.x, boxBody.transform.position.y + boxOffset.y + rayPoint.y), boxSize, 0, Vector2.zero, 0);
+            var priorityQueue = new PriorityQueue<RaycastHit2D>();
+            foreach (var hit in hits)
+            {
+                var priority = 0;
+                //SortedRaycastHit2D sortedRaycastHit2D = new SortedRaycastHit2D(hit);
+                if (hit.collider.TryGetComponent(out RaycastHit2DPriorityLayer raycastHit2DPriorityLayer))
+                {
+                    priority = raycastHit2DPriorityLayer.Priority;
+                }
+                priorityQueue.Enqueue(hit, priority);
+            }
+
+            //foreach (var element in priorityQueue)
+            //{
+            //    UnityEngine.Debug.Log(element.Priority);
+            //}
+
+            return priorityQueue;
         }
     }
 }
