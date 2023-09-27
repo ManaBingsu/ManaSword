@@ -1,9 +1,5 @@
-
-using System;
 using System.Collections.Generic;
-
 using ManaSword.Utility;
-
 using UnityEngine;
 
 namespace ManaSword.Physics2D.GridWorld

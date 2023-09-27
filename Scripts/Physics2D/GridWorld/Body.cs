@@ -76,6 +76,11 @@ namespace ManaSword.Physics2D.GridWorld
         {
             this.velocity = velocity;
         }
+
+        public void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+        }
     }
 }
 
